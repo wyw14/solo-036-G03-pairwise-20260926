@@ -717,6 +717,7 @@ func (r *Runtime) HealthDetails() map[string]any {
 		"route_leases":        len(route.Snapshot(r.Routes)),
 		"emergency_safe":      emergency.Safe(r.Pressure),
 		"pressure_samples":    len(r.Pressure.History()),
+		"telemetry_readings":  r.Telemetry.Count(),
 		"recovery_steps":      recoverySteps,
 		"captured_at":         snapshot.CapturedAt,
 	}

@@ -9,6 +9,7 @@ import (
 	"github.com/wyw14/solo-036/internal/receiver"
 	"github.com/wyw14/solo-036/internal/route"
 	"github.com/wyw14/solo-036/internal/run"
+	"github.com/wyw14/solo-036/internal/telemetry"
 	"github.com/wyw14/solo-036/internal/tracker"
 	"github.com/wyw14/solo-036/internal/valve"
 	"sync"
@@ -21,6 +22,7 @@ type Runtime struct {
 	Lineage    *tracker.SourceLineage
 	Journal    *journal.Store
 	Pressure   *pressure.Controller
+	Telemetry  *telemetry.Store
 	Permits    *permit.Evaluator
 	Launcher   *launcher.Controller
 	Valves     *valve.Controller
@@ -42,5 +44,5 @@ func NewRuntime() *Runtime {
 	valves := valve.NewController(p)
 	recv := receiver.NewController()
 	worker := compressor.NewWorker(p, runs)
-	return &Runtime{Runs: runs, Routes: routes, Tracker: tracks, Lineage: lineage, Journal: journalStore, Pressure: p, Permits: permits, Launcher: launch, Valves: valves, Receiver: recv, Compressor: worker, control: defaultControlState()}
+	return &Runtime{Runs: runs, Routes: routes, Tracker: tracks, Lineage: lineage, Journal: journalStore, Pressure: p, Telemetry: telemetry.NewStore(), Permits: permits, Launcher: launch, Valves: valves, Receiver: recv, Compressor: worker, control: defaultControlState()}
 }
